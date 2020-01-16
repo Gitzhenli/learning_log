@@ -7,6 +7,9 @@ urlpatterns = [
     # 主页
     path('', views.index, name='index'),
 
+    # 欢迎页面
+    path('welcome/', views.welcome, name='welcome'),
+
     # 显示所有的主题
     path('topics/', views.topics, name='topics'),
 

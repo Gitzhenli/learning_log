@@ -10,38 +10,57 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
-<body style="padding-top: 50px ">
+<body>
 
 <!-- Static navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-static-top">
     <div class="container">
-
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+                    data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'learning_logs:index' %}">Learning
-                Log</a>
+            {% if user.is_authenticated %}
+                <a class="navbar-brand"
+                   href="{% url 'learning_logs:welcome' %}">Learning
+                    logs</a>
+            {% else %}
+                <a class="navbar-brand" href="{% url 'learning_logs:index' %}">Learning
+                    logs</a>
+            {% endif %}
+
         </div>
 
-        <div id="navbar" class="navbar-collapse collapse">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'learning_logs:topics' %}">Topics</a></li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li><a>Hello,{{ user.username }}.</a></li>
-                    <li><a href="{% url 'users:logout' %}">log out</a></li>
+                    <li><a href="{% url 'users:logout' %}">Log out</a></li>
                 {% else %}
-                    <li><a href="{% url 'users:register' %}">register</a></li>
-                    <li><a href="{% url 'users:login' %}">log in</a></li>
+                    <li><a href="{% url 'users:register' %}">Register</a></li>
+                    <li><a href="{% url 'users:login' %}">Log in</a></li>
                 {% endif %}
             </ul>
-        </div><!--/.nav-collapse -->
-    </div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
-{% block content %}{% endblock content %}
+<div class="container">
+    <div class="page-header">
+        {% block header %}{% endblock header %}
+    </div>
+    <div>
+        {% block content %}{% endblock content %}
+    </div>
+</div>
 </body>
 </html>
